@@ -1,0 +1,46 @@
+# Virtual environment folder
+venv/
+.env
+*.env
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django migrations
+**/migrations/*.py
+**/migrations/*.pyc
+
+# Database files
+*.sqlite3
+
+# Static and media files (when collected)
+staticfiles/
+media/
+
+# Local development settings
+/local_settings.py
+
+# IDE-specific files (e.g., for VS Code)
+.vscode/
+.idea/
+
+# macOS-specific files
+.DS_Store
+
+# Logs and temporary files
+*.log
+*.pot
+*.mo
+*.pid
+*.seed
+*.backup
+*.swp
+*.swo
+*.orig
+*.coveragerc
+
+# Python-specific
+Pipfile
+Pipfile.lock
