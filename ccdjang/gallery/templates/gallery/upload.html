@@ -20,7 +20,7 @@
         {% csrf_token %}
         {{ form.as_p }} <!-- Automatically renders all form fields -->
 
-        {% if form.errors %}
+       <!--  {% if form.errors %}
         <div class="errorlist">
             <p>Please correct the following errors:</p>
             <ul>
@@ -34,11 +34,11 @@
                 {% endfor %}
             </ul>
         </div>
-        {% endif %}
-        <h3>Location</h3>
+        {% endif %} -->
+       <!--  <h3>Location</h3> -->
         <label for="location">Enter coordinates (longitude, latitude):</label>
         <input type="text" id="location" name="location" placeholder="e.g., -73.935242, 40.730610" required>
-        <button type="button" id="set-location">Set from Map</button>
+       <!--<button type="button" id="set-location">Set from Map</button> Not sure if I need this--> 
         <div id="map"></div>
 
         <button type="submit">Upload</button>
@@ -70,9 +70,9 @@
         });
 
         // Optional: Set coordinates from the map button
-        document.getElementById('set-location').addEventListener('click', function() {
+         document.getElementById('set-location').addEventListener('click', function() {
             alert("Click on the map to set the location.");
-        });
+        }); 
     </script>
 </body>
 </html>

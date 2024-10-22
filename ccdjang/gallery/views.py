@@ -12,28 +12,40 @@ def gallery(request):
 
 def upload_photo(request):
     if request.method == 'POST':
-        form = PhotoForm(request.POST, request.FILES)  # Include request.FILES to handle file uploads
+        form = PhotoForm(request.POST, request.FILES)  # Handle form submission
+        
         if form.is_valid():
-            location = request.POST.get('location')    
-            if location:
+            location = request.POST.get('location')  # Get location from form data
+            
+            if location:  # Check if location is provided
                 try:
+                    # Extract longitude and latitude
                     lon, lat = map(float, location.split(','))
-                    # Create a Point object
-                    point = Point(lon, lat)
-                    # Save the photo with the Point
+                    
+                    # Create a Point object with EPSG:4326
+                    point = Point(lon, lat, srid=4326)
+                    
+                    # Save the photo instance with the location
                     photo_instance = form.save(commit=False)  # Don't save to the database yet
                     photo_instance.location = point  # Assign the Point to the location field
-                    photo_instance.save()  # Now save it to the database
-                    return redirect('gallery')
-                except ValueError:
+                    photo_instance.save()  # Save it to the database
+                    
+                    return redirect('gallery')  # Redirect to the gallery view
+                
+                except ValueError as e:
                     form.add_error('location', 'Invalid coordinate format.')
                     return render(request, 'gallery/upload.html', {'form': form})
-                    
+            else:
+                form.add_error('location', 'Location is required.')
+                return render(request, 'gallery/upload.html', {'form': form})
+
         else:
-            # If the form is not valid, return the same template with errors
+            print("Form is invalid:", form.errors)  # Debugging output
             return render(request, 'gallery/upload.html', {'form': form})
 
     else:
-        form = PhotoForm()
+        form = PhotoForm()  # Create a new form instance for GET request
+    
     return render(request, 'gallery/upload.html', {'form': form})
+
 
