@@ -1,4 +1,6 @@
-from django.db import models
+# removing this standard import and replacing with geodjango import from django.db import models
+from django.contrib.gis.db import models
+import os
 
 # Create your models here.
 class Photo(models.Model):

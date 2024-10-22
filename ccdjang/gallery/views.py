@@ -3,6 +3,7 @@
 from django.shortcuts import render, redirect
 from .models import Photo
 from .forms import PhotoForm
+import os
 
 def gallery(request):
     photos = Photo.objects.all()
