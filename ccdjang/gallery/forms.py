@@ -8,7 +8,13 @@ class PhotoForm(forms.ModelForm):
 
 def clean_location(self):
         location = self.cleaned_data.get('location')
-        if not location:
-            raise forms.ValidationError("Location is required.")
-        # Additional validation can be added here
+        if location:
+            try:
+                lon, lat = map(float, location.split(','))
+                # Optionally, you can add more validation on longitude and latitude ranges
+                if not (-180 <= lon <= 180) or not (-90 <= lat <= 90):
+                    raise forms.ValidationError("Coordinates are out of range.")
+            except ValueError:
+                raise forms.ValidationError("Invalid coordinate format. Use 'longitude, latitude'.")
+
         return location
