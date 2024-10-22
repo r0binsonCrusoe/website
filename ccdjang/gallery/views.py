@@ -4,7 +4,6 @@ from django.shortcuts import render, redirect
 from .models import Photo
 from .forms import PhotoForm
 from django.contrib.gis.geos import Point
-from django.contrib import messages  # To show user-friendly error messages
 import os
 
 def gallery(request):
@@ -15,17 +14,21 @@ def upload_photo(request):
     if request.method == 'POST':
         form = PhotoForm(request.POST, request.FILES)  # Include request.FILES to handle file uploads
         if form.is_valid():
-            location_data = request.POST.get('location')    
-            if location_data:
-                # Split the coordinates and create a Point
-                longitude, latitude = map(float, location_data.split(','))
-                point = Point(longitude, latitude)  # Create a Point object
-            
-                # Save the photo with the point location
-                photo = form.save(commit=False)
-                photo.location = point  # Assign the Point to the location field
-                photo.save()
-                messages.success(request, 'Photo uploaded successfully!')
+            location = request.POST.get('location')    
+            if location:
+                try:
+                    lon, lat = map(float, location.split(','))
+                    # Create a Point object
+                    point = Point(lon, lat)
+                    # Save the photo with the Point
+                    photo_instance = form.save(commit=False)  # Don't save to the database yet
+                    photo_instance.location = point  # Assign the Point to the location field
+                    photo_instance.save()  # Now save it to the database
+                    return redirect('gallery')
+                except ValueError:
+                    form.add_error('location', 'Invalid coordinate format.')
+                    return render(request, 'gallery/upload.html', {'form': form})
+                    
         else:
             # If the form is not valid, return the same template with errors
             return render(request, 'gallery/upload.html', {'form': form})
