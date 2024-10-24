@@ -23,7 +23,7 @@ def upload_photo(request):
                     lon, lat = map(float, location.split(','))
                     
                     # Create a Point object with EPSG:4326
-                    point = Point(lon, lat, srid=4326)
+                    point = Point(float(lon), float(lat), srid=4326)
                     
                     # Save the photo instance with the location
                     photo_instance = form.save(commit=False)  # Don't save to the database yet
