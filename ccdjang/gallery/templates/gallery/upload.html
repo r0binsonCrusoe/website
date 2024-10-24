@@ -18,7 +18,7 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }} <!-- Automatically renders all form fields -->
-
+   
        <!--  {% if form.errors %}
         <div class="errorlist">
             <p>Please correct the following errors:</p>

@@ -3,6 +3,7 @@
 from django.shortcuts import render, redirect
 from .models import Photo
 from .forms import PhotoForm
+#from .forms import clean_location
 from django.contrib.gis.geos import Point
 import os
 
@@ -12,7 +13,7 @@ def index(request):
 
 def gallery(request):
     photos = Photo.objects.all()
-    return render(request, 'gallery/gallery.html', {'photos': photos}) #trying gallery/gallery.html 
+    return render(request, 'gallery/index.html', {'photos': photos}) #trying gallery/gallery.html 
 
 def upload_photo(request):
     if request.method == 'POST':

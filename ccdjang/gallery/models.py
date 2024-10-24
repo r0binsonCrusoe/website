@@ -10,6 +10,5 @@ class Photo(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     location = models.PointField(geography=True) # Use a PointField for coordinates
     
-
     def __str__(self):
         return self.title
