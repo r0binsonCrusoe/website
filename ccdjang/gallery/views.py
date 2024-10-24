@@ -6,9 +6,13 @@ from .forms import PhotoForm
 from django.contrib.gis.geos import Point
 import os
 
+# Create index view for the homepage
+def index(request):
+    return render(request,'gallery/index.html')
+
 def gallery(request):
     photos = Photo.objects.all()
-    return render(request, 'gallery.html', {'photos': photos})
+    return render(request, 'gallery/gallery.html', {'photos': photos}) #trying gallery/gallery.html 
 
 def upload_photo(request):
     if request.method == 'POST':
